@@ -1,0 +1,2111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlayersWidget</class>
+ <widget class="QWidget" name="PlayersWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1188</width>
+    <height>730</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Players</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="layoutMain1">
+     <item>
+      <widget class="QGroupBox" name="boxEditFile">
+       <property name="title">
+        <string>Edit file</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="btnOpenEditFile">
+          <property name="text">
+           <string>Open Edit file (encrypted)...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSaveAsEditFile">
+          <property name="text">
+           <string>Save as (encrypted)...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnOpenEditData">
+          <property name="text">
+           <string>Open Edit data (decrypted)...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSaveAsEditData">
+          <property name="text">
+           <string>Save as (decrypted)...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutPes16Decrypter">
+          <item>
+           <widget class="QLabel" name="lblPes16Decrypter">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/tunabrain4cc/pes16decrypter&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;pes16decrypter&lt;/span&gt;&lt;/a&gt; status:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblPes16DecrypterStatus">
+            <property name="text">
+             <string>unknown</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="boxPlayers">
+       <property name="title">
+        <string>Players</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QHBoxLayout" name="layoutTeamFilter">
+          <item>
+           <widget class="QLabel" name="lblTeamFiler">
+            <property name="text">
+             <string>Filter by team:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="cbxTeamFilter">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListWidget" name="lstPlayerEntries">
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutPlayerCount">
+          <item>
+           <widget class="QLabel" name="lblPlayerCount">
+            <property name="text">
+             <string>Player count:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spxPlayerCount">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="box4CC">
+       <property name="title">
+        <string>4CC</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QPushButton" name="btnMakeGoldPlayer">
+          <property name="text">
+           <string>Make Gold Medal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnMakeSilverPlayer">
+          <property name="text">
+           <string>Make Silver Medal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnMakeBronzePlayer">
+          <property name="text">
+           <string>Make Bronze Medal</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutCardsRemaining">
+          <item>
+           <widget class="QLabel" name="lblCardsRemaining">
+            <property name="text">
+             <string>Cards remaining:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spxRemainingCards">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="minimum">
+             <number>-99</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutMain2">
+     <item>
+      <widget class="QGroupBox" name="boxBasic">
+       <property name="title">
+        <string>Basic</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="lblPlayerId">
+          <property name="text">
+           <string>Player ID:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QSpinBox" name="spxPlayerId">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::NoButtons</enum>
+          </property>
+          <property name="minimum">
+           <number>-2147483647</number>
+          </property>
+          <property name="maximum">
+           <number>2147483647</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spxPlayerIdHex">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::NoButtons</enum>
+          </property>
+          <property name="prefix">
+           <string notr="true">0x</string>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>0</number>
+          </property>
+          <property name="displayIntegerBase">
+           <number>16</number>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="2">
+         <widget class="QLabel" name="lblPlayerName">
+          <property name="text">
+           <string>Player name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="2">
+         <widget class="QLineEdit" name="ldtPlayerName">
+          <property name="maxLength">
+           <number>45</number>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QLabel" name="lblCommentaryId">
+          <property name="text">
+           <string>Commentary ID:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="1">
+         <layout class="QHBoxLayout" name="layoutCommentaryId">
+          <item>
+           <widget class="QSpinBox" name="spxCommentaryId">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="minimum">
+             <number>-2147483647</number>
+            </property>
+            <property name="maximum">
+             <number>2147483647</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="12" column="1">
+         <widget class="QPushButton" name="btnCommentaryNone">
+          <property name="text">
+           <string>None</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0">
+         <widget class="QLabel" name="lblNationalityRegion">
+          <property name="text">
+           <string>Nationality/Region:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0">
+         <widget class="QLabel" name="lblAge">
+          <property name="text">
+           <string>Age:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="1">
+         <widget class="QSpinBox" name="spxAge">
+          <property name="maximum">
+           <number>63</number>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0">
+         <widget class="QLabel" name="lblStrongerFoot">
+          <property name="text">
+           <string>Stronger Foot:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="0">
+         <widget class="QLabel" name="lblRegisteredPosition">
+          <property name="text">
+           <string>Registered Position:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="1">
+         <widget class="QComboBox" name="cbxRegisteredPosition"/>
+        </item>
+        <item row="18" column="0">
+         <widget class="QLabel" name="lblPlayingStyle">
+          <property name="text">
+           <string>Playing Style:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="1">
+         <widget class="QComboBox" name="cbxPlayingStyle"/>
+        </item>
+        <item row="19" column="0">
+         <widget class="QLabel" name="lblHeight">
+          <property name="text">
+           <string>Height (cm):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="19" column="1">
+         <widget class="QSpinBox" name="spxHeight">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="0">
+         <widget class="QLabel" name="lblWeight">
+          <property name="text">
+           <string>Weight (kg):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="1">
+         <widget class="QSpinBox" name="spxWeight">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lblPrintName">
+          <property name="text">
+           <string>Print name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="ldtPrintName">
+          <property name="maxLength">
+           <number>15</number>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="1">
+         <widget class="QSpinBox" name="spxNationalityRegion">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::NoButtons</enum>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="1">
+         <widget class="QComboBox" name="cbxStrongerFoot"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="boxUnknown">
+       <property name="title">
+        <string>Unknown (you might have to edit these)</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="2">
+         <widget class="QLabel" name="lblUnknownBInfo">
+          <property name="text">
+           <string>True?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="lblUnknownAInfo">
+          <property name="text">
+           <string>always 65535?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="chbUnknownB">
+          <property name="text">
+           <string>Unknown B</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="1">
+         <layout class="QHBoxLayout" name="layoutUnknownG">
+          <item>
+           <widget class="QSpinBox" name="spxUnknownG">
+            <property name="maximum">
+             <number>3</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblUnknownG">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>G</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="1">
+         <layout class="QHBoxLayout" name="layoutUnknownC">
+          <item>
+           <widget class="QSpinBox" name="spxUnknownC">
+            <property name="maximum">
+             <number>3</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblUnknownC">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>C</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="9" column="1">
+         <widget class="QCheckBox" name="chbUnknownE">
+          <property name="text">
+           <string>Unknown E</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QCheckBox" name="chbUnknownF">
+          <property name="text">
+           <string>Unknown F</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="chbUnknownD">
+          <property name="text">
+           <string>Unknown D</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="1">
+         <widget class="QCheckBox" name="chbUnknownH">
+          <property name="text">
+           <string>Unknown H</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="lblUnknownCInfo">
+          <property name="text">
+           <string>always 0?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="2">
+         <widget class="QLabel" name="lblUnknownGInfo">
+          <property name="text">
+           <string>always 0?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="2">
+         <widget class="QLabel" name="lblUnknownIInfo">
+          <property name="text">
+           <string>always 0?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLabel" name="lblUnknownDInfo">
+          <property name="text">
+           <string>Reg. Pos.?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="2">
+         <widget class="QLabel" name="lblUnknownEInfo">
+          <property name="text">
+           <string>False?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="2">
+         <widget class="QLabel" name="lblUnknownFInfo">
+          <property name="text">
+           <string>False?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="2">
+         <widget class="QLabel" name="lblUnknownHInfo">
+          <property name="text">
+           <string>False?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="layoutUnknownA">
+          <item>
+           <widget class="QSpinBox" name="spxUnknownA">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblUnknownA">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>A</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="15" column="1">
+         <layout class="QHBoxLayout" name="layoutUnknownI">
+          <item>
+           <widget class="QSpinBox" name="spxUnknownI">
+            <property name="maximum">
+             <number>15</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblUnknownI">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>I</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spcMain2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutMain3">
+     <item>
+      <layout class="QHBoxLayout" name="layoutMain3Sub">
+       <item>
+        <widget class="QGroupBox" name="boxPlayablePosition">
+         <property name="title">
+          <string>Playable Position</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="2" column="0">
+           <widget class="QLabel" name="lblCentreForward">
+            <property name="text">
+             <string>CF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSlider" name="sldCentreForward">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lblSecondStriker">
+            <property name="text">
+             <string>SS</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSlider" name="sldSecondStriker">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lblLeftWingForward">
+            <property name="text">
+             <string>LWF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSlider" name="sldLeftWingForward">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lblRightWingForward">
+            <property name="text">
+             <string>RWF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSlider" name="sldRightWingForward">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="lblAttackingMidfielder">
+            <property name="text">
+             <string>AMF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSlider" name="sldAttackingMidfielder">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="lblLeftMidfielder">
+            <property name="text">
+             <string>LMF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSlider" name="sldLeftMidfielder">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="lblRightMidfielder">
+            <property name="text">
+             <string>RMF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QSlider" name="sldRightMidfielder">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="lblCentreMidfielder">
+            <property name="text">
+             <string>CMF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSlider" name="sldCentreMidfielder">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="lblDefensiveMidfielder">
+            <property name="text">
+             <string>DMF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QSlider" name="sldDefensiveMidfielder">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="lblLeftBack">
+            <property name="text">
+             <string>LB</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QSlider" name="sldLeftBack">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="lblRightBack">
+            <property name="text">
+             <string>RB</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QSlider" name="sldRightBack">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="lblCentreBack">
+            <property name="text">
+             <string>CB</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <widget class="QSlider" name="sldCentreBack">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="lblGoalkeeper">
+            <property name="text">
+             <string>GK</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QSlider" name="sldGoalkeeper">
+            <property name="maximum">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="layoutPlayablePositionLegend">
+            <item>
+             <widget class="QLabel" name="lblPlayablePositionC">
+              <property name="text">
+               <string>C</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblPlayablePositionB">
+              <property name="text">
+               <string>B</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblPlayablePositionA">
+              <property name="text">
+               <string>A</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="boxComPlayingStyles">
+         <property name="title">
+          <string>COM Playing Styles</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="chbTrickster">
+            <property name="text">
+             <string>Trickster</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbMazingRun">
+            <property name="text">
+             <string>Mazing Run</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbSpeedingBullet">
+            <property name="text">
+             <string>Speeding Bullet</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbIncisiveRun">
+            <property name="text">
+             <string>Incisive Run</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbLongBallExpert">
+            <property name="text">
+             <string>Long Ball Expert</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbEarlyCross">
+            <property name="text">
+             <string>Early Cross</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chbLongRanger">
+            <property name="text">
+             <string>Long Ranger</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="layoutRemainingComPlayingStyles">
+            <item>
+             <widget class="QLabel" name="lblRemainingComPlayingStyles">
+              <property name="text">
+               <string>Remaining:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spxRemainingComPlayingStyles">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <number>-99</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="spcComPlayingStyles">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="boxMotion">
+       <property name="title">
+        <string>Motion</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblMotionHunchingDribbling">
+          <property name="text">
+           <string>Hunching (Dribbling):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="spxMotionHunchingDribbling">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblMotionArmMovementDribbling">
+          <property name="text">
+           <string>Arm Movement (Dribbling)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spxMotionArmMovementDribbling">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblMotionHunchingRunning">
+          <property name="text">
+           <string>Hunching (Running):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="spxMotionHunchingRunning">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblMotionArmMovementRunning">
+          <property name="text">
+           <string>Arm Movement (Running):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="spxMotionArmMovementRunning">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="lblMotionCornerKick">
+          <property name="text">
+           <string>Corner Kick:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spxMotionCornerKick">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="lblMotionFreeKick">
+          <property name="text">
+           <string>Free Kick:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="spxMotionFreeKick">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="lblMotionPenaltyKick">
+          <property name="text">
+           <string>Penalty Kick:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSpinBox" name="spxMotionPenaltyKick">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="lblMotionGoalCelebration1">
+          <property name="text">
+           <string>Goal Celebration 1:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QSpinBox" name="spxMotionGoalCelebration1"/>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lblMotionGoalCelebration2">
+          <property name="text">
+           <string>Goal Celebration 2:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QSpinBox" name="spxMotionGoalCelebration2"/>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="lblMotionGoalCelebrationNote">
+          <property name="text">
+           <string>(0 = OFF)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QPushButton" name="btnMotionRandomize">
+          <property name="text">
+           <string>Randomize</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spcMain3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutMain4">
+     <item>
+      <widget class="QGroupBox" name="boxPlayerSkills">
+       <property name="title">
+        <string>Player Skills</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QCheckBox" name="chbScissorsFeint">
+          <property name="text">
+           <string>Scissors Feint</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbFlipFlap">
+          <property name="text">
+           <string>Flip Flap</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbMarseilleTurn">
+          <property name="text">
+           <string>Marseille Turn</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbSombrero">
+          <property name="text">
+           <string>Sombrero</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbCutBehindAndTurn">
+          <property name="text">
+           <string>Cut Behind &amp;&amp; Turn</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbScotchMove">
+          <property name="text">
+           <string>Scotch Move</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbHeading">
+          <property name="text">
+           <string>Heading</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbLongRangeDrive">
+          <property name="text">
+           <string>Long Range Drive</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbKnuckleShot">
+          <property name="text">
+           <string>Knuckle Shot</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbAcrobaticFinishing">
+          <property name="text">
+           <string>Acrobatic Finishing</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbHeelTrick">
+          <property name="text">
+           <string>Heel Trick</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbFirstTimeShot">
+          <property name="text">
+           <string>First-time Shot</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbOneTouchPass">
+          <property name="text">
+           <string>One-touch Pass</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbWeightedPass">
+          <property name="text">
+           <string>Weighted Pass</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbPinpointCrossing">
+          <property name="text">
+           <string>Pinpoint Crossing</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbOutsideCurler">
+          <property name="text">
+           <string>Outside Curler</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbRabona">
+          <property name="text">
+           <string>Rabona</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbLowLoftedPass">
+          <property name="text">
+           <string>Low Lofted Pass</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbLowPuntTrajectory">
+          <property name="text">
+           <string>Low Punt Trajectory</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbLongThrow">
+          <property name="text">
+           <string>Long Throw</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbGkLongThrow">
+          <property name="text">
+           <string>GK Long Throw</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbMalicia">
+          <property name="text">
+           <string>Malicia</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbManMarking">
+          <property name="text">
+           <string>Man Marking</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbTrackback">
+          <property name="text">
+           <string>Track Back</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbAcrobaticClear">
+          <property name="text">
+           <string>Acrobatic Clear</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbCaptaincy">
+          <property name="text">
+           <string>Captaincy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbSuperSub">
+          <property name="text">
+           <string>Super-sub</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chbFightingSpirit">
+          <property name="text">
+           <string>Fighting Spirit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutRemainingPlayerSkills">
+          <item>
+           <widget class="QLabel" name="lblRemainingPlayerSkills">
+            <property name="text">
+             <string>Remaining:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spxRemainingPlayerSkills">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="minimum">
+             <number>-99</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spcMain4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layoutMain5">
+     <item>
+      <widget class="QGroupBox" name="boxAbility">
+       <property name="title">
+        <string>Ability</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblAttackingProwess">
+          <property name="text">
+           <string>Attacking Prowess:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="spxAttackingProwess">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblBallControl">
+          <property name="text">
+           <string>Ball Control:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spxBallControl">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblDribbling">
+          <property name="text">
+           <string>Dribbling:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="spxDribbling">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblLowPass">
+          <property name="text">
+           <string>Low Pass:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="spxLowPass">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="lblLoftedPass">
+          <property name="text">
+           <string>Lofted Pass:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spxLoftedPass">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="lblFinishing">
+          <property name="text">
+           <string>Finishing:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="spxFinishing">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="lblPlaceKicking">
+          <property name="text">
+           <string>Place Kicking:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSpinBox" name="spxPlaceKicking">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="lblSwerve">
+          <property name="text">
+           <string>Swerve:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QSpinBox" name="spxSwerve">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lblHeader">
+          <property name="text">
+           <string>Header:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QSpinBox" name="spxHeader">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="lblDefensiveProwess">
+          <property name="text">
+           <string>Defensive Prowess:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QSpinBox" name="spxDefensiveProwess">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="lblBallWinning">
+          <property name="text">
+           <string>Ball Winning:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QSpinBox" name="spxBallWinning">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QLabel" name="lblKickingPower">
+          <property name="text">
+           <string>Kicking Power:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="1">
+         <widget class="QSpinBox" name="spxKickingPower">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0">
+         <widget class="QLabel" name="lblSpeed">
+          <property name="text">
+           <string>Speed:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QSpinBox" name="spxSpeed">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="0">
+         <widget class="QLabel" name="lblExplosivePower">
+          <property name="text">
+           <string>Explosive Power:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="1">
+         <widget class="QSpinBox" name="spxExplosivePower">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0">
+         <widget class="QLabel" name="lblBodyBalance">
+          <property name="text">
+           <string>Body Balance:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="1">
+         <widget class="QSpinBox" name="spxBodyBalance">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0">
+         <widget class="QLabel" name="lblJump">
+          <property name="text">
+           <string>Jump:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="1">
+         <widget class="QSpinBox" name="spxJump">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="0">
+         <widget class="QLabel" name="lblStamina">
+          <property name="text">
+           <string>Stamina:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="1">
+         <widget class="QSpinBox" name="spxStamina">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="0">
+         <widget class="QLabel" name="lblGoalkeeping">
+          <property name="text">
+           <string>Goalkeeping:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="1">
+         <widget class="QSpinBox" name="spxGoalkeeping">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="0">
+         <widget class="QLabel" name="lblCatching">
+          <property name="text">
+           <string>Catching:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="1">
+         <widget class="QSpinBox" name="spxCatching">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="19" column="0">
+         <widget class="QLabel" name="lblClearing">
+          <property name="text">
+           <string>Clearing:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="19" column="1">
+         <widget class="QSpinBox" name="spxClearing">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="0">
+         <widget class="QLabel" name="lblReflexes">
+          <property name="text">
+           <string>Reflexes:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="20" column="1">
+         <widget class="QSpinBox" name="spxReflexes">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="21" column="0">
+         <widget class="QLabel" name="lblCoverage">
+          <property name="text">
+           <string>Coverage:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="21" column="1">
+         <widget class="QSpinBox" name="spxCoverage">
+          <property name="maximum">
+           <number>127</number>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="0">
+         <widget class="QLabel" name="lblWeakFootUsage">
+          <property name="text">
+           <string>Weak Foot Usage:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="1">
+         <widget class="QSpinBox" name="spxWeakFootUsage">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>4</number>
+          </property>
+         </widget>
+        </item>
+        <item row="23" column="0">
+         <widget class="QLabel" name="lblWeakFootAccuracy">
+          <property name="text">
+           <string>Weak Foot Accuracy:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="23" column="1">
+         <widget class="QSpinBox" name="spxWeakFootAccuracy">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>4</number>
+          </property>
+         </widget>
+        </item>
+        <item row="24" column="0">
+         <widget class="QLabel" name="lblForm">
+          <property name="text">
+           <string>Form:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="24" column="1">
+         <widget class="QSpinBox" name="spxForm">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>8</number>
+          </property>
+         </widget>
+        </item>
+        <item row="25" column="0">
+         <widget class="QLabel" name="lblInjuryResistance">
+          <property name="text">
+           <string>Injury Resistance:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="25" column="1">
+         <widget class="QSpinBox" name="spxInjuryResistance">
+          <property name="prefix">
+           <string/>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>4</number>
+          </property>
+          <property name="value">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="boxAppearanceLimited">
+     <property name="title">
+      <string>Appearance (limited)</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_4">
+      <item row="5" column="0">
+       <widget class="QLabel" name="lblSkinColor">
+        <property name="text">
+         <string>Skin color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="cbxSkinColor"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="lblIrisColor">
+        <property name="text">
+         <string>Eye color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QComboBox" name="cbxIrisColor"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="lblSpectacles">
+        <property name="text">
+         <string>Glasses:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="cbxSpectaclesFrameColor"/>
+      </item>
+      <item row="8" column="0" colspan="2">
+       <widget class="QComboBox" name="cbxSpectacles"/>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="lblGoalkeeperGlovesId">
+        <property name="text">
+         <string>GK gloves ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QSpinBox" name="spxGoalkeeperGlovesId">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="maximum">
+         <number>999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
+       <widget class="QLabel" name="lblBootsId">
+        <property name="text">
+         <string>Boots ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QSpinBox" name="spxBootsId">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="maximum">
+         <number>9999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedFaceSettings">
+        <property name="text">
+         <string>Edited Face settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedHairstyleSettings">
+        <property name="text">
+         <string>Edited Hairstyle settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedPhysiqueSettings">
+        <property name="text">
+         <string>Edited Physique settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedStripStyleSettings">
+        <property name="text">
+         <string>Edited Strip Style settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLabel" name="lblAppearanceEditedNote">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;You have to edit those yourself!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>btnOpenEditFile</tabstop>
+  <tabstop>btnSaveAsEditFile</tabstop>
+  <tabstop>btnOpenEditData</tabstop>
+  <tabstop>btnSaveAsEditData</tabstop>
+  <tabstop>cbxTeamFilter</tabstop>
+  <tabstop>lstPlayerEntries</tabstop>
+  <tabstop>spxPlayerCount</tabstop>
+  <tabstop>btnMakeGoldPlayer</tabstop>
+  <tabstop>btnMakeSilverPlayer</tabstop>
+  <tabstop>btnMakeBronzePlayer</tabstop>
+  <tabstop>spxRemainingCards</tabstop>
+  <tabstop>spxPlayerId</tabstop>
+  <tabstop>spxPlayerIdHex</tabstop>
+  <tabstop>ldtPlayerName</tabstop>
+  <tabstop>ldtPrintName</tabstop>
+  <tabstop>spxCommentaryId</tabstop>
+  <tabstop>btnCommentaryNone</tabstop>
+  <tabstop>spxNationalityRegion</tabstop>
+  <tabstop>spxAge</tabstop>
+  <tabstop>cbxStrongerFoot</tabstop>
+  <tabstop>cbxRegisteredPosition</tabstop>
+  <tabstop>cbxPlayingStyle</tabstop>
+  <tabstop>spxHeight</tabstop>
+  <tabstop>spxWeight</tabstop>
+  <tabstop>spxUnknownA</tabstop>
+  <tabstop>chbUnknownB</tabstop>
+  <tabstop>spxUnknownC</tabstop>
+  <tabstop>chbUnknownD</tabstop>
+  <tabstop>chbUnknownE</tabstop>
+  <tabstop>chbUnknownF</tabstop>
+  <tabstop>spxUnknownG</tabstop>
+  <tabstop>chbUnknownH</tabstop>
+  <tabstop>spxUnknownI</tabstop>
+  <tabstop>sldCentreForward</tabstop>
+  <tabstop>sldSecondStriker</tabstop>
+  <tabstop>sldLeftWingForward</tabstop>
+  <tabstop>sldRightWingForward</tabstop>
+  <tabstop>sldAttackingMidfielder</tabstop>
+  <tabstop>sldLeftMidfielder</tabstop>
+  <tabstop>sldRightMidfielder</tabstop>
+  <tabstop>sldCentreMidfielder</tabstop>
+  <tabstop>sldDefensiveMidfielder</tabstop>
+  <tabstop>sldLeftBack</tabstop>
+  <tabstop>sldRightBack</tabstop>
+  <tabstop>sldCentreBack</tabstop>
+  <tabstop>sldGoalkeeper</tabstop>
+  <tabstop>chbTrickster</tabstop>
+  <tabstop>chbMazingRun</tabstop>
+  <tabstop>chbSpeedingBullet</tabstop>
+  <tabstop>chbIncisiveRun</tabstop>
+  <tabstop>chbLongBallExpert</tabstop>
+  <tabstop>chbEarlyCross</tabstop>
+  <tabstop>chbLongRanger</tabstop>
+  <tabstop>spxRemainingComPlayingStyles</tabstop>
+  <tabstop>spxMotionHunchingDribbling</tabstop>
+  <tabstop>spxMotionArmMovementDribbling</tabstop>
+  <tabstop>spxMotionHunchingRunning</tabstop>
+  <tabstop>spxMotionArmMovementRunning</tabstop>
+  <tabstop>spxMotionCornerKick</tabstop>
+  <tabstop>spxMotionFreeKick</tabstop>
+  <tabstop>spxMotionPenaltyKick</tabstop>
+  <tabstop>spxMotionGoalCelebration1</tabstop>
+  <tabstop>spxMotionGoalCelebration2</tabstop>
+  <tabstop>btnMotionRandomize</tabstop>
+  <tabstop>chbScissorsFeint</tabstop>
+  <tabstop>chbFlipFlap</tabstop>
+  <tabstop>chbMarseilleTurn</tabstop>
+  <tabstop>chbSombrero</tabstop>
+  <tabstop>chbCutBehindAndTurn</tabstop>
+  <tabstop>chbScotchMove</tabstop>
+  <tabstop>chbHeading</tabstop>
+  <tabstop>chbLongRangeDrive</tabstop>
+  <tabstop>chbKnuckleShot</tabstop>
+  <tabstop>chbAcrobaticFinishing</tabstop>
+  <tabstop>chbHeelTrick</tabstop>
+  <tabstop>chbFirstTimeShot</tabstop>
+  <tabstop>chbOneTouchPass</tabstop>
+  <tabstop>chbWeightedPass</tabstop>
+  <tabstop>chbPinpointCrossing</tabstop>
+  <tabstop>chbOutsideCurler</tabstop>
+  <tabstop>chbRabona</tabstop>
+  <tabstop>chbLowLoftedPass</tabstop>
+  <tabstop>chbLowPuntTrajectory</tabstop>
+  <tabstop>chbLongThrow</tabstop>
+  <tabstop>chbGkLongThrow</tabstop>
+  <tabstop>chbMalicia</tabstop>
+  <tabstop>chbManMarking</tabstop>
+  <tabstop>chbTrackback</tabstop>
+  <tabstop>chbAcrobaticClear</tabstop>
+  <tabstop>chbCaptaincy</tabstop>
+  <tabstop>chbSuperSub</tabstop>
+  <tabstop>chbFightingSpirit</tabstop>
+  <tabstop>spxRemainingPlayerSkills</tabstop>
+  <tabstop>spxAttackingProwess</tabstop>
+  <tabstop>spxBallControl</tabstop>
+  <tabstop>spxDribbling</tabstop>
+  <tabstop>spxLowPass</tabstop>
+  <tabstop>spxLoftedPass</tabstop>
+  <tabstop>spxFinishing</tabstop>
+  <tabstop>spxPlaceKicking</tabstop>
+  <tabstop>spxSwerve</tabstop>
+  <tabstop>spxHeader</tabstop>
+  <tabstop>spxDefensiveProwess</tabstop>
+  <tabstop>spxBallWinning</tabstop>
+  <tabstop>spxKickingPower</tabstop>
+  <tabstop>spxSpeed</tabstop>
+  <tabstop>spxExplosivePower</tabstop>
+  <tabstop>spxBodyBalance</tabstop>
+  <tabstop>spxJump</tabstop>
+  <tabstop>spxStamina</tabstop>
+  <tabstop>spxGoalkeeping</tabstop>
+  <tabstop>spxCatching</tabstop>
+  <tabstop>spxClearing</tabstop>
+  <tabstop>spxReflexes</tabstop>
+  <tabstop>spxCoverage</tabstop>
+  <tabstop>spxWeakFootUsage</tabstop>
+  <tabstop>spxWeakFootAccuracy</tabstop>
+  <tabstop>spxForm</tabstop>
+  <tabstop>spxInjuryResistance</tabstop>
+  <tabstop>cbxSkinColor</tabstop>
+  <tabstop>cbxIrisColor</tabstop>
+  <tabstop>cbxSpectaclesFrameColor</tabstop>
+  <tabstop>cbxSpectacles</tabstop>
+  <tabstop>spxGoalkeeperGlovesId</tabstop>
+  <tabstop>spxBootsId</tabstop>
+  <tabstop>chbEditedFaceSettings</tabstop>
+  <tabstop>chbEditedHairstyleSettings</tabstop>
+  <tabstop>chbEditedPhysiqueSettings</tabstop>
+  <tabstop>chbEditedStripStyleSettings</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
