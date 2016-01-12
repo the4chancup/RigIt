@@ -17,67 +17,6 @@
    <item>
     <layout class="QVBoxLayout" name="layoutMain1">
      <item>
-      <widget class="QGroupBox" name="boxEditFile">
-       <property name="title">
-        <string>Edit file</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QPushButton" name="btnOpenEditFile">
-          <property name="text">
-           <string>Open Edit file (encrypted)...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnSaveAsEditFile">
-          <property name="text">
-           <string>Save as (encrypted)...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnOpenEditData">
-          <property name="text">
-           <string>Open Edit data (decrypted)...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnSaveAsEditData">
-          <property name="text">
-           <string>Save as (decrypted)...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="layoutPes16Decrypter">
-          <item>
-           <widget class="QLabel" name="lblPes16Decrypter">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/tunabrain4cc/pes16decrypter&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;pes16decrypter&lt;/span&gt;&lt;/a&gt; status:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="textFormat">
-             <enum>Qt::RichText</enum>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblPes16DecrypterStatus">
-            <property name="text">
-             <string>unknown</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <widget class="QGroupBox" name="boxPlayers">
        <property name="title">
         <string>Players</string>
@@ -1171,7 +1110,11 @@
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QSpinBox" name="spxMotionGoalCelebration1"/>
+         <widget class="QSpinBox" name="spxMotionGoalCelebration1">
+          <property name="maximum">
+           <number>122</number>
+          </property>
+         </widget>
         </item>
         <item row="8" column="0">
          <widget class="QLabel" name="lblMotionGoalCelebration2">
@@ -1181,7 +1124,11 @@
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QSpinBox" name="spxMotionGoalCelebration2"/>
+         <widget class="QSpinBox" name="spxMotionGoalCelebration2">
+          <property name="maximum">
+           <number>122</number>
+          </property>
+         </widget>
         </item>
         <item row="9" column="0">
          <widget class="QLabel" name="lblMotionGoalCelebrationNote">
@@ -1976,10 +1923,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>btnOpenEditFile</tabstop>
-  <tabstop>btnSaveAsEditFile</tabstop>
-  <tabstop>btnOpenEditData</tabstop>
-  <tabstop>btnSaveAsEditData</tabstop>
   <tabstop>cbxTeamFilter</tabstop>
   <tabstop>lstPlayerEntries</tabstop>
   <tabstop>spxPlayerCount</tabstop>

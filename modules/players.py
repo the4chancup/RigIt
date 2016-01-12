@@ -6,7 +6,6 @@ from RigLib.pes16edit import *
 from RigLib.pes16proxies import *
 from RigLib.pes16enums import *
 from RigLib.pyqthelperfunctions import *
-from RigLib.pes16crypto import EditFile
 import os
 
 
@@ -17,18 +16,11 @@ class PlayersListWidgetItem(QListWidgetItem):
 
 
 class PlayersWidget(QWidget, Ui_PlayersWidget): 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.setupUi(self)
         self._setPlayerEntryFieldsEnabled(False)
         
-        editDir = QDir.homePath()
-        editDir += '/documents/KONAMI/Pro Evolution Soccer 2016/save'
-        if (os.path.isdir(editDir)):
-            self._directory = editDir
-        else:
-            self._directory = QDir.currentPath()
-        self._editFile = EditFile()
         self._editData = None
         self.playerEntryProxy = PlayerEntryProxy()
         self.appearanceEntryProxy = AppearanceEntryProxy()
@@ -37,16 +29,8 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         self.cardLimit = 0
         self.medalType = 'bronze'
         
-        # Handle open/save buttons
-        if (EditFile.crypterAvailable()):
-            self.btnOpenEditFile.setEnabled(True)
-            self.lblPes16DecrypterStatus.setText('found')
-        else:
-            self.btnOpenEditFile.setEnabled(False)
-            self.lblPes16DecrypterStatus.setText('missing!')
-        self.btnSaveAsEditFile.setEnabled(False)
-        self.btnOpenEditData.setEnabled(True)
-        self.btnSaveAsEditData.setEnabled(False)
+        # Connect to load/save menu
+        self.parent().loadedEditData.connect(self.loadEditData)
         
         # Fill comboboxes
         fillQComboBox(self.cbxStrongerFoot, StrongerFoot)
@@ -58,10 +42,6 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         fillQComboBox(self.cbxIrisColor, IrisColor)
         
         # Connect signals to slots
-        self.btnOpenEditFile.clicked.connect(lambda: self.openEdit(False))
-        self.btnSaveAsEditFile.clicked.connect(lambda: self.saveEdit(False))
-        self.btnOpenEditData.clicked.connect(lambda: self.openEdit(True))
-        self.btnSaveAsEditData.clicked.connect(lambda: self.saveEdit(True))
         self.lstPlayerEntries.currentItemChanged.connect(self.loadPlayerEntry)
         self.btnMakeGoldPlayer.clicked.connect(lambda:
         self.makeMedalPlayer('gold'))
@@ -283,73 +263,18 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         self.spxPlayerIdHex.setValue(-1)
         self.spxPlayerIdHex.setSpecialValueText('0x' + hex(le)[2:].upper())
     
-    @pyqtSlot(bool, str)
-    def openEdit(self, dataOnly, filename=None):
-        if (self._editData != None):
-            QMessageBox.warning(None, 'Warning',
-            'You will lose any unsaved changes!')
-        
-        # Get open filename if needed
-        if (filename == None):
-            if (dataOnly):
-                filter = 'Edit data file (*.dat *)'
-            else:
-                filter = 'Edit file (*)'
-            filename = getOpenFileName(self, self._directory, filter)
-        if (filename == None):
-            return
-        
-        # Parse data
-        if (dataOnly):
-            # Read input file #TODO: move outside of block with proper cryptor
-            try:
-                with open(filename, 'rb') as f:
-                    data = bytearray(f.read())
-            except FileNotFoundError:
-                QMessageBox.critical(None, 'Error', 'File not found!')
-                return False
-            self._editData = EditData(data) #TODO: needs error handling
-        else: #TODO: needs error handling
-            self._editFile.fromEditFile(filename)
-            self._editData = EditData(self._editFile.data) 
-            self.btnSaveAsEditFile.setEnabled(True) # we have edit file data
-        self._directory = os.path.dirname(filename)
-        
-        # Update GUI
-        self.btnSaveAsEditData.setEnabled(True)
-        self._loadPlayersIntoListWidget()
-        self.spxPlayerCount.setValue(len(self._editData.playerEntries))
-        self._setPlayerEntryFieldsEnabled(True)
-    
-    @pyqtSlot(bool, str)
-    def saveEdit(self, dataOnly, filename=None):
-        # Get save filename if needed
-        if (filename == None):
-            if (dataOnly):
-                filter = 'Edit data file (*.dat *)'
-            else:
-                filter = 'Edit file (*)'
-            filename = getSaveFileName(self, self._directory, filter)
-        if (filename == None):
-            return
-        
-        # Write to file #TODO: error handling
-        if (dataOnly):
-            with open(filename, 'wb') as f:
-                f.write(self._editData.toBytearray())
-        else:
-            self._editFile.data = self._editData.toBytearray()
-            self._editFile.saveToEditFile(filename)
-        self._directory = os.path.dirname(filename)
-        
-    def _loadPlayersIntoListWidget(self):
+    @pyqtSlot(EditData)
+    def loadEditData(self, editData):
+        self._editData = editData
         self.lstPlayerEntries.clear() #TODO: delete old QListWidgetItems?
-        for id in sorted(self._editData.playerEntries.keys()):
+        for id in sorted(editData.playerEntries.keys()):
             item = PlayersListWidgetItem()
-            item.playerEntry = self._editData.playerEntries[id]
+            item.playerEntry = editData.playerEntries[id]
             item.setText(item.playerEntry.playerName)
             self.lstPlayerEntries.addItem(item)
         self.lstPlayerEntries.setCurrentRow(0) # select first item
+        self.spxPlayerCount.setValue(len(editData.playerEntries))
+        self._setPlayerEntryFieldsEnabled(True)
     
     @pyqtSlot(str)
     def _updateListWidgetText(self, str):
