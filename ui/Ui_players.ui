@@ -1935,7 +1935,20 @@
   <tabstop>btnMakeSilverPlayer</tabstop>
   <tabstop>btnMakeBronzePlayer</tabstop>
   <tabstop>spxRemainingCards</tabstop>
+  <tabstop>chbEditedCreatedPlayer</tabstop>
+  <tabstop>spxPlayerId</tabstop>
+  <tabstop>spxPlayerIdHex</tabstop>
+  <tabstop>ldtPlayerName</tabstop>
+  <tabstop>ldtPrintName</tabstop>
   <tabstop>spxCommentaryId</tabstop>
+  <tabstop>btnCommentaryNone</tabstop>
+  <tabstop>spxNationalityRegion</tabstop>
+  <tabstop>spxAge</tabstop>
+  <tabstop>cbxStrongerFoot</tabstop>
+  <tabstop>cbxRegisteredPosition</tabstop>
+  <tabstop>cbxPlayingStyle</tabstop>
+  <tabstop>spxHeight</tabstop>
+  <tabstop>spxWeight</tabstop>
   <tabstop>spxUnknownA</tabstop>
   <tabstop>spxUnknownC</tabstop>
   <tabstop>chbUnknownD</tabstop>
@@ -2030,16 +2043,16 @@
   <tabstop>spxWeakFootAccuracy</tabstop>
   <tabstop>spxForm</tabstop>
   <tabstop>spxInjuryResistance</tabstop>
+  <tabstop>chbEditedFaceSettings</tabstop>
+  <tabstop>chbEditedHairstyleSettings</tabstop>
+  <tabstop>chbEditedPhysiqueSettings</tabstop>
+  <tabstop>chbEditedStripStyleSettings</tabstop>
   <tabstop>cbxSkinColor</tabstop>
   <tabstop>cbxIrisColor</tabstop>
   <tabstop>cbxSpectaclesFrameColor</tabstop>
   <tabstop>cbxSpectacles</tabstop>
   <tabstop>spxGoalkeeperGlovesId</tabstop>
   <tabstop>spxBootsId</tabstop>
-  <tabstop>chbEditedFaceSettings</tabstop>
-  <tabstop>chbEditedHairstyleSettings</tabstop>
-  <tabstop>chbEditedPhysiqueSettings</tabstop>
-  <tabstop>chbEditedStripStyleSettings</tabstop>
  </tabstops>
  <resources/>
  <connections/>
