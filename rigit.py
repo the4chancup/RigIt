@@ -9,7 +9,7 @@ from RigLib.pes16crypto import EditFile
 
 # Application information #TODO: do this correctly and in a more practical way
 name = 'RigIt'
-version = '0.2.0'
+version = '0.3.0'
 wiki = 'https://implyingrigged.info/wiki/RigIt'
 repository = 'https://github.com/the4chancup/RigIt/'
 welcomeText = '''WARNING: this tool is in its beta phase and may not work

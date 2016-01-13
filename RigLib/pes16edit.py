@@ -125,8 +125,11 @@ class StoredDataStructure:
     def __getattribute__(self, name):
         if (name == "_attributes" or not name in self._attributes):
             return object.__getattribute__(self, name) #TODO: super?
-        else:
-            return getattr(self, '_' + name) + self._attributes[name][1]
+        else: #TODO: crashes if type can't handle value + integer
+            if (self._attributes[name][1] != 0): #TODO: dirty hack
+                return getattr(self, '_' + name) + self._attributes[name][1]
+            else:
+                return getattr(self, '_' + name)
     
     def __setattr__(self, name, value):
         if (name == "_attributes" or not name in self._attributes):
@@ -140,7 +143,7 @@ class StoredDataStructure:
                 mask = (1 << self._attributes[name][0]) - 1
                 setattr(self, '_' + name, newValue & mask)
     
-    def setDefaultValues(self):
+    def setDefaultValues(self): #TODO: add handlings for different types/None
         for name in self._attributes:
             setattr(self, '_' + name, self._attributes[name][2])
           
@@ -170,7 +173,7 @@ class PlayerEntry(StoredDataStructure):
     _attributes['loftedPass'] = (7, 0, 80)
     _attributes['header'] = (7, 0, 80)
     _attributes['form'] = (3, 1, 3)
-    _attributes['unknownB'] = (1, 0, 1)
+    _attributes['editedCreatedPlayer'] = (1, 0, 1)
     _attributes['swerve'] = (7, 0, 80)
     _attributes['catching'] = (7, 0, 80)
     _attributes['clearing'] = (7, 0, 80)
@@ -345,7 +348,7 @@ class PlayerEntry(StoredDataStructure):
         self._loftedPass = data[9] >> 14 & 0b1111111
         self._header = data[9] >> 21 & 0b1111111
         self._form = data[9] >> 28 & 0b111
-        self._unknownB = data[9] >> 31 & 0b1
+        self._editedCreatedPlayer = data[9] >> 31 & 0b1
         self._swerve = data[10] & 0b1111111
         self._catching = data[10] >> 7 & 0b1111111
         self._clearing = data[10] >> 14 & 0b1111111
@@ -506,7 +509,7 @@ class PlayerEntry(StoredDataStructure):
         value |= self._loftedPass << 14
         value |= self._header << 21
         value |= self._form << 28
-        value |= self._unknownB << 31
+        value |= self._editedCreatedPlayer << 31
         data.append(value)
         value = self._swerve
         value |= self._catching << 7
@@ -561,15 +564,15 @@ class PlayerEntry(StoredDataStructure):
 class AppearanceEntry(StoredDataStructure): #TODO: complete, use enums
     _struct = struct.Struct("<iIiBBBBBBBBBBB22sB18sB7s")
     _attributes = {}
-    _attributes['player'] = (32, 0, None)
+    _attributes['player'] = (32, 0, -1) #TODO: None is not handled well
     _attributes['editedFaceSettings'] = (1, 0, 0)
     _attributes['editedHairstyleSettings'] = (1, 0, 0)
     _attributes['editedPhysiqueSettings'] = (1, 0, 0)
     _attributes['editedStripStyleSettings'] = (1, 0, 0)
     _attributes['boots'] = (14, 0, 23)
     _attributes['goalkeeperGloves'] = (10, 0, 10)
-    _attributes['unknownB'] = (4, 0, None) #TODO: verify default
-    _attributes['baseCopyPlayer'] = (32, 0, None)
+    _attributes['unknownB'] = (4, 0, 0) #TODO: verify default
+    _attributes['baseCopyPlayer'] = (32, 0, 0) #TODO: actually unknown default
     _attributes['neckLength'] = (32, -7, 7)
     _attributes['neckSize'] = (32, -7, 7)
     _attributes['shoulderHeight'] = (32, -7, 7)
@@ -668,6 +671,7 @@ class AppearanceEntry(StoredDataStructure): #TODO: complete, use enums
     
     def setDefaultValues(self):
         super().setDefaultValues()
+        self._baseCopyPlayer = self._player
         self._spectaclesFrameColor = SpectaclesFrameColor.WHITE #TODO: verify
         self._spectacles = Spectacles.NONE
         self._playerGlovesColor = PlayerGlovesColor.WHITE
