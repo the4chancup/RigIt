@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1188</width>
-    <height>730</height>
+    <width>1200</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -150,14 +150,21 @@
         <string>Basic</string>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
-        <item row="2" column="0" colspan="2">
+        <item row="0" column="0" colspan="2">
+         <widget class="QCheckBox" name="chbEditedCreatedPlayer">
+          <property name="text">
+           <string>Edited/created player</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
          <widget class="QLabel" name="lblPlayerId">
           <property name="text">
            <string>Player ID:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="2" column="0">
          <widget class="QSpinBox" name="spxPlayerId">
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -179,7 +186,7 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="2" column="1">
          <widget class="QSpinBox" name="spxPlayerIdHex">
           <property name="enabled">
            <bool>true</bool>
@@ -207,29 +214,144 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0" colspan="2">
+        <item row="3" column="0" colspan="2">
          <widget class="QLabel" name="lblPlayerName">
           <property name="text">
            <string>Player name:</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0" colspan="2">
+        <item row="4" column="0" colspan="2">
          <widget class="QLineEdit" name="ldtPlayerName">
           <property name="maxLength">
            <number>45</number>
           </property>
          </widget>
         </item>
-        <item row="11" column="0">
+        <item row="5" column="0" colspan="2">
+         <widget class="QLabel" name="lblPrintName">
+          <property name="text">
+           <string>Print name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="2">
+         <widget class="QLineEdit" name="ldtPrintName">
+          <property name="maxLength">
+           <number>15</number>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
          <widget class="QLabel" name="lblCommentaryId">
           <property name="text">
            <string>Commentary ID:</string>
           </property>
          </widget>
         </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lblNationalityRegion">
+          <property name="text">
+           <string>Nationality/Region:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QSpinBox" name="spxNationalityRegion">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::NoButtons</enum>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="lblAge">
+          <property name="text">
+           <string>Age:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QSpinBox" name="spxAge">
+          <property name="maximum">
+           <number>63</number>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="lblStrongerFoot">
+          <property name="text">
+           <string>Stronger Foot:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QComboBox" name="cbxStrongerFoot"/>
+        </item>
+        <item row="11" column="0">
+         <widget class="QLabel" name="lblRegisteredPosition">
+          <property name="text">
+           <string>Registered Position:</string>
+          </property>
+         </widget>
+        </item>
         <item row="11" column="1">
-         <layout class="QHBoxLayout" name="layoutCommentaryId">
+         <widget class="QComboBox" name="cbxRegisteredPosition"/>
+        </item>
+        <item row="12" column="0">
+         <widget class="QLabel" name="lblPlayingStyle">
+          <property name="text">
+           <string>Playing Style:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QComboBox" name="cbxPlayingStyle"/>
+        </item>
+        <item row="13" column="0">
+         <widget class="QLabel" name="lblHeight">
+          <property name="text">
+           <string>Height (cm):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="1">
+         <widget class="QSpinBox" name="spxHeight">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="0">
+         <widget class="QLabel" name="lblWeight">
+          <property name="text">
+           <string>Weight (kg):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="1">
+         <widget class="QSpinBox" name="spxWeight">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
           <item>
            <widget class="QSpinBox" name="spxCommentaryId">
             <property name="alignment">
@@ -249,126 +371,14 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="btnCommentaryNone">
+            <property name="text">
+             <string>None</string>
+            </property>
+           </widget>
+          </item>
          </layout>
-        </item>
-        <item row="12" column="1">
-         <widget class="QPushButton" name="btnCommentaryNone">
-          <property name="text">
-           <string>None</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="0">
-         <widget class="QLabel" name="lblNationalityRegion">
-          <property name="text">
-           <string>Nationality/Region:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="0">
-         <widget class="QLabel" name="lblAge">
-          <property name="text">
-           <string>Age:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="1">
-         <widget class="QSpinBox" name="spxAge">
-          <property name="maximum">
-           <number>63</number>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="0">
-         <widget class="QLabel" name="lblStrongerFoot">
-          <property name="text">
-           <string>Stronger Foot:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="0">
-         <widget class="QLabel" name="lblRegisteredPosition">
-          <property name="text">
-           <string>Registered Position:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
-         <widget class="QComboBox" name="cbxRegisteredPosition"/>
-        </item>
-        <item row="18" column="0">
-         <widget class="QLabel" name="lblPlayingStyle">
-          <property name="text">
-           <string>Playing Style:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="1">
-         <widget class="QComboBox" name="cbxPlayingStyle"/>
-        </item>
-        <item row="19" column="0">
-         <widget class="QLabel" name="lblHeight">
-          <property name="text">
-           <string>Height (cm):</string>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="1">
-         <widget class="QSpinBox" name="spxHeight">
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="0">
-         <widget class="QLabel" name="lblWeight">
-          <property name="text">
-           <string>Weight (kg):</string>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="1">
-         <widget class="QSpinBox" name="spxWeight">
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="lblPrintName">
-          <property name="text">
-           <string>Print name:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QLineEdit" name="ldtPrintName">
-          <property name="maxLength">
-           <number>15</number>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="1">
-         <widget class="QSpinBox" name="spxNationalityRegion">
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="minimum">
-           <number>0</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="1">
-         <widget class="QComboBox" name="cbxStrongerFoot"/>
         </item>
        </layout>
       </widget>
@@ -379,24 +389,10 @@
         <string>Unknown (you might have to edit these)</string>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="2">
-         <widget class="QLabel" name="lblUnknownBInfo">
-          <property name="text">
-           <string>True?</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QLabel" name="lblUnknownAInfo">
           <property name="text">
            <string>always 65535?</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QCheckBox" name="chbUnknownB">
-          <property name="text">
-           <string>Unknown B</string>
           </property>
          </widget>
         </item>
@@ -901,6 +897,9 @@
           <string>COM Playing Styles</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>5</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="chbTrickster">
             <property name="text">
@@ -1170,6 +1169,9 @@
         <string>Player Skills</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="spacing">
+         <number>5</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="chbScissorsFeint">
           <property name="text">
@@ -1422,6 +1424,9 @@
         <string>Ability</string>
        </property>
        <layout class="QFormLayout" name="formLayout">
+        <property name="verticalSpacing">
+         <number>5</number>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="lblAttackingProwess">
           <property name="text">
@@ -1517,13 +1522,6 @@
          <widget class="QSpinBox" name="spxPlaceKicking">
           <property name="maximum">
            <number>127</number>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="lblSwerve">
-          <property name="text">
-           <string>Swerve:</string>
           </property>
          </widget>
         </item>
@@ -1781,10 +1779,10 @@
           </property>
          </widget>
         </item>
-        <item row="25" column="0">
-         <widget class="QLabel" name="lblInjuryResistance">
+        <item row="7" column="0">
+         <widget class="QLabel" name="lblSwerve">
           <property name="text">
-           <string>Injury Resistance:</string>
+           <string>Swerve:</string>
           </property>
          </widget>
         </item>
@@ -1804,6 +1802,13 @@
           </property>
          </widget>
         </item>
+        <item row="25" column="0">
+         <widget class="QLabel" name="lblInjuryResistance">
+          <property name="text">
+           <string>Injury Resistance:</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -1815,6 +1820,41 @@
       <string>Appearance (limited)</string>
      </property>
      <layout class="QFormLayout" name="formLayout_4">
+      <item row="0" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedFaceSettings">
+        <property name="text">
+         <string>Edited Face settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedHairstyleSettings">
+        <property name="text">
+         <string>Edited Hairstyle settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedPhysiqueSettings">
+        <property name="text">
+         <string>Edited Physique settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="chbEditedStripStyleSettings">
+        <property name="text">
+         <string>Edited Strip Style settings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLabel" name="lblAppearanceEditedNote">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;You have to edit those yourself!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
       <item row="5" column="0">
        <widget class="QLabel" name="lblSkinColor">
         <property name="text">
@@ -1882,41 +1922,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QCheckBox" name="chbEditedFaceSettings">
-        <property name="text">
-         <string>Edited Face settings</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QCheckBox" name="chbEditedHairstyleSettings">
-        <property name="text">
-         <string>Edited Hairstyle settings</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QCheckBox" name="chbEditedPhysiqueSettings">
-        <property name="text">
-         <string>Edited Physique settings</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QCheckBox" name="chbEditedStripStyleSettings">
-        <property name="text">
-         <string>Edited Strip Style settings</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QLabel" name="lblAppearanceEditedNote">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;You have to edit those yourself!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -1930,21 +1935,8 @@
   <tabstop>btnMakeSilverPlayer</tabstop>
   <tabstop>btnMakeBronzePlayer</tabstop>
   <tabstop>spxRemainingCards</tabstop>
-  <tabstop>spxPlayerId</tabstop>
-  <tabstop>spxPlayerIdHex</tabstop>
-  <tabstop>ldtPlayerName</tabstop>
-  <tabstop>ldtPrintName</tabstop>
   <tabstop>spxCommentaryId</tabstop>
-  <tabstop>btnCommentaryNone</tabstop>
-  <tabstop>spxNationalityRegion</tabstop>
-  <tabstop>spxAge</tabstop>
-  <tabstop>cbxStrongerFoot</tabstop>
-  <tabstop>cbxRegisteredPosition</tabstop>
-  <tabstop>cbxPlayingStyle</tabstop>
-  <tabstop>spxHeight</tabstop>
-  <tabstop>spxWeight</tabstop>
   <tabstop>spxUnknownA</tabstop>
-  <tabstop>chbUnknownB</tabstop>
   <tabstop>spxUnknownC</tabstop>
   <tabstop>chbUnknownD</tabstop>
   <tabstop>chbUnknownE</tabstop>

@@ -21,7 +21,7 @@ class PlayerEntryProxy(SignalSlotProxy):
     _signals['loftedPass'] = AttributeSignal(int)
     _signals['header'] = AttributeSignal(int)
     _signals['form'] = AttributeSignal(int)
-    _signals['unknownB'] = AttributeSignal(bool)
+    _signals['editedCreatedPlayer'] = AttributeSignal(bool)
     _signals['swerve'] = AttributeSignal(int)
     _signals['catching'] = AttributeSignal(int)
     _signals['clearing'] = AttributeSignal(int)

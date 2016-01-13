@@ -68,6 +68,7 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
     
     def _wireUpPlayerEntryProxy(self):
         proxy = self.playerEntryProxy
+        proxy.cleverConnect(self.chbEditedCreatedPlayer, 'editedCreatedPlayer')
         proxy.cleverConnect(self.spxPlayerId, 'playerId')
         proxy.cleverConnect(self.ldtPlayerName, 'playerName')
         proxy.cleverConnect(self.ldtPrintName, 'printName')
@@ -80,7 +81,6 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         proxy.cleverConnect(self.spxHeight, 'height')
         proxy.cleverConnect(self.spxWeight, 'weight')
         proxy.cleverConnect(self.spxUnknownA, 'unknownA')
-        proxy.cleverConnect(self.chbUnknownB, 'unknownB')
         proxy.cleverConnect(self.spxUnknownC, 'unknownC')
         proxy.cleverConnect(self.chbUnknownD, 'unknownD')
         proxy.cleverConnect(self.chbUnknownE, 'unknownE')
@@ -215,8 +215,15 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         self.appearanceEntryProxy.setProxySubject(None)
         if (current != None):
             self.playerEntryProxy.setProxySubject(current.playerEntry)
-            appearanceEntry = self._editData.findAppearanceEntryById(
+            try:
+                appearanceEntry = self._editData.findAppearanceEntryById(
             current.playerEntry.playerId)
+            except KeyError:
+                QMessageBox.critical(None, 'Error', 'Player has no ' +
+                'appearance entry.\n\nChanges made to the appearance will ' + 
+                'not be saved. Please create a custom face in-game first.')
+                appearanceEntry = AppearanceEntry()
+                
             self.appearanceEntryProxy.setProxySubject(appearanceEntry)
             self.determineMedalStatus()
             self.spxRemainingCards.setValue(self.cardLimit)
