@@ -105,6 +105,7 @@ Don't forget to save but keep the unchanged Edit file!""" #TODO
                 if (hasattr(checkBox, 'playerAttribute')):
                     setattr(player, checkBox.playerAttribute,
                     getattr(basePlayer, checkBox.playerAttribute))
+        player.editedCreatedPlayer = True
     
     @classmethod
     def determineMedalStatus(cls, player): #TODO: put it somewhere else?
