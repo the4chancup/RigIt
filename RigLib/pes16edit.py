@@ -1,4 +1,5 @@
 import struct
+from math import pow
 from RigLib.pes16enums import *
 
 
@@ -138,10 +139,10 @@ class StoredDataStructure:
             newValue = value - self._attributes[name][1]
             if (self._attributes[name][0] == 32): #TODO: dirty hack for s int
                 newValue = max(-0x7FFFFFFF, min(newValue, 0x7FFFFFFF - 1))
-                setattr(self, '_' + name, newValue)
             else:
-                mask = (1 << self._attributes[name][0]) - 1
-                setattr(self, '_' + name, newValue & mask)
+                newValue = max(0, min(newValue, pow(2,
+                self._attributes[name][0]) - 1))
+            setattr(self, '_' + name, newValue)
     
     def setDefaultValues(self): #TODO: add handlings for different types/None
         for name in self._attributes:

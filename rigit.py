@@ -9,7 +9,7 @@ from RigLib.pes16crypto import EditFile
 
 # Application information #TODO: do this correctly and in a more practical way
 name = 'RigIt'
-version = '0.3.0'
+version = '0.4.0'
 wiki = 'https://implyingrigged.info/wiki/RigIt'
 repository = 'https://github.com/the4chancup/RigIt/'
 welcomeText = '''WARNING: this tool is in its beta phase and may not work
@@ -48,5 +48,8 @@ if __name__ == '__main__':
     from modules.players import PlayersWidget
     playersTab = PlayersWidget(mainWindow)
     mainWindow.mainTabs.addTab(playersTab, playersTab.windowTitle())
+    from modules.batchplayerediting4cc import BatchPlayerEditing4ccWidget
+    batchTab = BatchPlayerEditing4ccWidget(mainWindow)
+    mainWindow.mainTabs.addTab(batchTab, batchTab.windowTitle())
     mainWindow.show()
     sys.exit(app.exec_())

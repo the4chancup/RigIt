@@ -11,6 +11,7 @@ class SignalSlotProxy(QObject): # TODO: disconnect/clean up methods
     def __init__(self, subject=None):
         super().__init__() # needed for defining signals
         self._subject = subject #TODO: make sure _subject is not taken
+        self._setupSignals()
     
     def setProxySubject(self, subject):
         self._subject = subject
