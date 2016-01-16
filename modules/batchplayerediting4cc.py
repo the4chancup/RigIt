@@ -64,6 +64,7 @@ Don't forget to save but keep the unchanged Edit file!""" #TODO
     
     def _fillMedalBox(self, box, player):
         layout = QFormLayout(box)
+        layout.setVerticalSpacing(1)
         checkAll = QCheckBox(box) #TODO: breaks the tab order
         checkAll.setText('All')
         spinAll = QSpinBox(box) #TODO: breaks the tab order
