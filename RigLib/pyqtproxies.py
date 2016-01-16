@@ -95,7 +95,7 @@ class SignalSlotProxy(QObject): # TODO: disconnect/clean up methods
 
 
 class SignalWrapper(QObject):
-    _signal = pyqtSignal(int)
+    _signal = None
     
     def __getattr__(self, name):
         if (name != '_signal'):
@@ -104,33 +104,12 @@ class SignalWrapper(QObject):
             return self._signal
 
 
-class AttributeSignalInteger(SignalWrapper):
-    _signal = pyqtSignal(int)
-
-    
-class AttributeSignalString(SignalWrapper):
-    _signal = pyqtSignal(str)
-
-
-class AttributeSignalBool(SignalWrapper):
-    _signal = pyqtSignal(bool)
-
-
-class AttributeSignalFloat(SignalWrapper):
-    _signal = pyqtSignal(float) #TODO: verify if substitute is correct
-
-    
 class AttributeSignal():
-    def __new__(self, signature): #TODO: allow signatures with more elements
-        if (signature == int):
-            return AttributeSignalInteger()
-        elif (signature == str):
-            return AttributeSignalString()
-        elif (signature == bool):
-            return AttributeSignalBool()
-        elif (signature == float):
-            return AttributeSignalFloat()
-        else:
-            raise NotImplementedError('Signal signature is not implemented')
+    _signalTypes = {}
 
-            
+    def __new__(self, signature): #TODO: verify that signature lists work, too
+        if signature not in self._signalTypes:
+            self._signalTypes[signature] = type(__name__ + str(signature),#TODO
+            (SignalWrapper,), {'_signal': pyqtSignal(signature)}) #Python3 way?
+        return self._signalTypes[signature]()
+
