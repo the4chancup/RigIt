@@ -337,10 +337,8 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         self.spxCoverage.setValue(stats)
         self.spxForm.setValue(form)
         self.spxInjuryResistance.setValue(3)
-        if (self.spxAttackingProwess.value() > stats):
-            self.spxAttackingProwess.setValue(stats)
-        if (self.spxDefensiveProwess.value() > stats):
-            self.spxDefensiveProwess.setValue(stats)
+        self.spxAttackingProwess.setValue(stats)
+        self.spxDefensiveProwess.setValue(stats)
         QMessageBox.information(None, 'Note', 'Adjust Defensive/Attacking'
         + ' Prowess to your needs (neither must exceed ' + str(stats) + ').')
 
