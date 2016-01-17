@@ -40,8 +40,8 @@ class BatchPlayerEditing4ccWidget(QWidget, Ui_BatchPlayerEditing4cc):
     _batchStats.append('weakFootAccuracy')
     _batchStats.append('form')
     _batchStats.append('injuryResistance')
-    _APPLY_MEDAL_STATS_INFO = """Done.
-Don't forget to save but keep the unchanged Edit file!""" #TODO
+    _APPLY_MEDAL_STATS_INFO = '''Done.
+Don't forget to save but keep the unchanged Edit file!''' #TODO
 
     def __init__(self, parent=None):
         super().__init__(parent)

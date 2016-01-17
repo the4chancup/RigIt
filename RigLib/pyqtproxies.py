@@ -100,8 +100,8 @@ class SignalWrapper(QObject):
     def __getattr__(self, name):
         if (name != '_signal'):
             return getattr(self._signal, name)
-        else:
-            return self._signal
+        else: #TODO: check if getattr triggers __getattr__
+            return self._signal #if not, this is not needed
 
 
 class AttributeSignal():

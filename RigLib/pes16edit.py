@@ -1,6 +1,6 @@
 import struct
-from math import pow
 from RigLib.pes16enums import *
+import math
 
 
 class EditData:
@@ -33,7 +33,7 @@ class EditData:
         #TODO: turn everything into class or something else
         # Read header
         self._header = data[:self.HEADER_LENGTH]
-        playerCount = struct.unpack("<H", data[52:54])[0]
+        playerCount = struct.unpack('<H', data[52:54])[0]
         
         # Read player entries
         self.playerEntries = {} # dictionary to disallow duplicate IDs
@@ -112,7 +112,7 @@ class EditData:
         
     def findAppearanceEntryById(self, id):
         return self.appearanceEntries[id]
-        
+
 
 class StoredDataStructure:
     _attributes = {}
@@ -124,7 +124,7 @@ class StoredDataStructure:
             self.setDefaultValues()
     
     def __getattribute__(self, name):
-        if (name == "_attributes" or not name in self._attributes):
+        if (name == '_attributes' or not name in self._attributes):
             return object.__getattribute__(self, name) #TODO: super?
         else: #TODO: crashes if type can't handle value + integer
             if (self._attributes[name][1] != 0): #TODO: dirty hack
@@ -133,15 +133,15 @@ class StoredDataStructure:
                 return getattr(self, '_' + name)
     
     def __setattr__(self, name, value):
-        if (name == "_attributes" or not name in self._attributes):
+        if (name == '_attributes' or not name in self._attributes):
             object.__setattr__(self, name, value)
         else:
             newValue = value - self._attributes[name][1]
             if (self._attributes[name][0] == 32): #TODO: dirty hack for s int
                 newValue = max(-0x7FFFFFFF, min(newValue, 0x7FFFFFFF - 1))
             else:
-                newValue = max(0, min(newValue, pow(2,
-                self._attributes[name][0]) - 1))
+                newValue = max(0, min(newValue,
+                math.pow(2, self._attributes[name][0]) - 1))
             setattr(self, '_' + name, newValue)
     
     def setDefaultValues(self): #TODO: add handlings for different types/None
@@ -154,7 +154,7 @@ class StoredDataStructure:
 
             
 class PlayerEntry(StoredDataStructure):
-    _struct = struct.Struct("<iiHHBBBBIIIIIBIHBQ46s16s")
+    _struct = struct.Struct('<iiHHBBBBIIIIIBIHBQ46s16s')
     _attributes = {}
     _attributes['playerId'] = (32, 0, None)
     _attributes['commentaryName'] = (32, 0, -1)
@@ -563,7 +563,7 @@ class PlayerEntry(StoredDataStructure):
         return ba[:0x32] + ba[0x34:]
 
 class AppearanceEntry(StoredDataStructure): #TODO: complete, use enums
-    _struct = struct.Struct("<iIiBBBBBBBBBBB22sB18sB7s")
+    _struct = struct.Struct('<iIiBBBBBBBBBBB22sB18sB7s')
     _attributes = {}
     _attributes['player'] = (32, 0, -1) #TODO: None is not handled well
     _attributes['editedFaceSettings'] = (1, 0, 0)
@@ -832,15 +832,15 @@ def _testToBytearray(testedClass, inputFileName, outputFileName=None):
         print('Fail!\n')
     return passed
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import os
     dir = os.path.dirname(os.path.realpath(__file__)) + '/test/'
     allPass = True
     allPass &= _testToBytearray(PlayerEntry, dir + 'player_entry_test')
     allPass &= _testToBytearray(AppearanceEntry, dir + 'appearance_entry_test')
     allPass &= _testToBytearray(EditData, dir + 'edit.dat', dir + 'data.dat')
-    print("\nTest results:")
+    print('\nTest results:')
     if (allPass):
-        print("ALL OK!")
+        print('ALL OK!')
     else:
-        print("FAIL!")
+        print('FAIL!')
