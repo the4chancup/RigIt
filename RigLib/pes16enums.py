@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GameDataEnum(Enum):
+class GameDataEnum(Enum): #TODO: move to its own file
     def __init__(self, menuId, gameId=None, description=None, data=None):
         self.menuId = menuId
         if (gameId != None):
@@ -17,22 +17,22 @@ class GameDataEnum(Enum):
     def __str__(self):
         return self.description
         
-    def __ge__(self, other):
+    def __ge__(self, other): # warning: behavior might be changed
         if self.__class__ is other.__class__:
             return self.menuId >= other.menuId
         return NotImplemented
         
-    def __gt__(self, other):
+    def __gt__(self, other): # warning: behavior might be changed
         if self.__class__ is other.__class__:
             return self.menuId > other.menuId
         return NotImplemented
 
-    def __le__(self, other):
+    def __le__(self, other): # warning: behavior might be changed
         if self.__class__ is other.__class__:
             return self.menuId <= other.menuId
         return NotImplemented
 
-    def __lt__(self, other):
+    def __lt__(self, other): # warning: behavior might be changed
         if self.__class__ is other.__class__:
             return self.menuId < other.menuId
         return NotImplemented
@@ -66,6 +66,30 @@ class GameDataEnum(Enum):
     @classmethod
     def fromData(cls, data):
         return cls._fromAttribute('data', data)
+        
+    @classmethod
+    def maxGameId(cls):
+        if (len(cls.__members__) == 0):
+            return None
+        val = None
+        for member in cls.__members__:
+            if (val == None):
+                val = cls.__members__[member].gameId
+            elif (cls.__members__[member].gameId > val):
+                val = cls.__members__[member].gameId
+        return val
+    
+    @classmethod
+    def minGameId(cls):
+        if (len(cls.__members__) == 0):
+            return None
+        val = None
+        for member in cls.__members__:
+            if (val == None):
+                val = cls.__members__[member].gameId
+            elif (cls.__members__[member].gameId < val):
+                val = cls.__members__[member].gameId
+        return val
 
         
 class RegisteredPosition(GameDataEnum):
