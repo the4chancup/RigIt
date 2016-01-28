@@ -1,6 +1,5 @@
 from pes16enums import *
 import math
-import struct
 import inspect
 
 
@@ -11,6 +10,8 @@ class Attr:
         self.dataType = dataType
         self.offset = self._offsetCounter
         self.text = text
+        if (length <= 0):
+            raise ValueError('length must be > 0')
         if (default != None and type(default) != self.dataType):
             raise TypeError('Default value must be of the same data type')
         self.defaultValue = default
@@ -25,7 +26,7 @@ class Attr:
             self.length = 1
             self.minValue = False
             self.maxValue = True
-            self.valueOffset = False # whether True/false is switched
+            self.valueOffset = False # whether True/False is switched
         elif (self.dataType == str): # min/max applies to the string length
             if (length % 8 != 0):
                 raise ValueError('length of type str must be a multiple of 8')
@@ -42,7 +43,7 @@ class Attr:
         else:
             raise TypeError(__class__.__name__ +
             ' does not support the given type or class')
-        self._offsetCounter += self.length
+        self.__class__._offsetCounter += self.length
         
     @classmethod
     def resetOffset(cls):
@@ -52,28 +53,66 @@ class Attr:
     def getOffset(cls):
         return cls._offsetCounter
         
-    def readFromLittleEndian(self, data):
+    def readFromBytearray(self, data, byteorder='little'):
+        startByte = self.offset // 8
         if (self.dataType == bool):
-            return (data[self.offset // 8] >> (self.offset % 8)) & 1
+            return (data[startByte] >> (self.offset % 8)) & 1
         elif (self.dataType == str):
-            start = self.offset // 8
-            end = start + self.length // 8 + 1
-            val = data[start:end].decode('utf-8') #TODO: verify encoding
+            endByte = startByte + self.length // 8
+            val = data[startByte:endByte].decode('utf-8') #TODO: utf-8?
             return val[:val.find('\0')]
         else: # type is int or extension of GameDataEnum
-            startByte = attr.offset // 8
-            endByte = (attr.offset + attr.length) // 8
-            if (startByte == endByte):
-                mask = 0b11111111 >> (8 - attr.length)
-                val = (data[startByte] >> (attr.offset % 8)) & mask
-            else:
-                #hard
-                val = 0 #TODO
+            endByte = (self.offset + self.length - 1) // 8
+            if (startByte == endByte): # endianness does not matter
+                mask = 0b11111111 >> (8 - self.length)
+                val = (data[startByte] >> (self.offset % 8)) & mask
+            else: # endianness matters
+                subData = data[startByte:endByte + 1]
+                val = int.from_bytes(subData, byteorder)
+                val >>= self.offset % 8
+                val &= (1 << self.length) - 1
             if (self.dataType == int):
                 return val
             else: # type is extension of GameDataEnum
-                return dataType.fromGameId(val)
-        
+                return self.dataType.fromGameId(val)
+    
+    def writeToBytearray(self, data, value, byteorder='little'):
+        startByte = self.offset // 8
+        if (self.dataType == bool):
+            offset = self.offset % 8
+            data[startByte] ^= (-value ^ data[startByte]) & (1 << offset)
+        elif (self.dataType == str):
+            value += '\0' * (self.length // 8 - len(value))
+            endByte = startByte + self.length // 8
+            data[startByte:endByte] = bytearray(value, 'utf-8') #TODO: utf-8?
+        else: # type is int or extension of GameDataEnum
+            if (self.dataType != int): # type is extension of GameDataEnum
+                value = value.gameId
+            endByte = (self.offset + self.length - 1) // 8
+            if (startByte == endByte): # endianness does not matter
+                offset = self.offset % 8
+                mask = ~(((1 << self.length) - 1) << offset)
+                data[startByte] &= mask
+                data[startByte] |= (value << offset) & 0b11111111
+            else: # endianness matters
+                subData = data[startByte:endByte + 1]
+                val = int.from_bytes(subData, byteorder)
+                offset = self.offset % 8 
+                mask = ~(((1 << self.length) - 1) << offset)
+                val &= mask
+                limitMask = (1 << ((endByte - startByte + 1) * 8)) - 1
+                val |= (value << offset) & limitMask
+                ba = val.to_bytes(len(subData), byteorder)
+                data[startByte:endByte + 1] = ba
+
+
+    def _stuff(self, length, offset, byte, value):
+        mask = ~(((1 << length) - 1) << (offset % 8))
+        byte &= mask
+        byte |= (value << (offset % 8)) & 0b11111111
+        return byte
+
+
 class StoredDataStructure:
     _attr = {}
     _length = None
@@ -137,23 +176,28 @@ class StoredDataStructure:
                 newValue = value[:attr.maxValue]
                 if (len(newValue) < attr.minValue):
                     old = getattr(self, '_' + name)
-                    newValue = old[:(attr.minValue - len(newValue))] + newValue
+                    newValue = old[:attr.minValue - len(newValue)] + newValue
             else: # type is extension of GameDataEnum
-                newValue = value
+                newValue = value #TODO: problematic if illegal enum
             setattr(self, '_' + name, newValue)
     
     def unpackData(self):
+        print('unpacking!')
         if (self._unpacked):
             return
         for name in self._attr:
             setattr(self, '_' + name,
-            self._attr[name].readFromLittleEndian(self._data))
+            self._attr[name].readFromBytearray(self._data))
         self._data = None
         self._unpacked = True
           
-    def printAttributes(self):
-        for attr in self._attr:
-            print(self._attr[attr].text, ' = ', getattr(self, '_' + attr))
+    def printAttributes(self, sort=True):
+        if (sort):
+            for name in sorted(self._attr.keys()):
+                print(name, ' = ', getattr(self, name))
+        else:
+            for attr in self._attr:
+                print(self._attr[attr].text, ' = ', getattr(self, '_' + attr))
             
     def fromBytearray(self, data, unpackData=False):
         if (len(data) != self.dataStructureLength()):
@@ -164,9 +208,16 @@ class StoredDataStructure:
         if (unpackData):
             self.unpackData()
     
-    def toBytearray(self):
-        pass
-        #return data
+    def toBytearray(self, ba=None):
+        if (ba == None):
+            ba = bytearray([0] * self.dataStructureLength())
+        elif (len(ba) != self.dataStructureLength()):
+            raise ValueError('Expected bytearray of length ' +
+            str(self.dataStructureLength()) + ', got ' + str(len(data)))
+        for name in self._attr:
+            #print('Writing...', name)
+            self._attr[name].writeToBytearray(ba, getattr(self, '_' + name))
+        return ba
     
     def setDefaultValues(self):
         for name in self._attr:
@@ -202,7 +253,7 @@ class PlayerEntry(StoredDataStructure):
     _attr['header'] = Attr(int, 7, 'Header', 80)
     _attr['form'] = Attr(int, 3, 'Form', 3)
     _attr['form'].valueOffset = 1
-    _attr['editedCreatedPlayer'] = Attr(bool, 1, 'Edited/created player', True)
+    _attr['editedCreatedPlayer'] = Attr(bool, 1, 'Edited/Created player', True)
     _attr['swerve'] = Attr(int, 7, 'Swerve', 80)
     _attr['catching'] = Attr(int, 7, 'Catching', 80)
     _attr['clearing'] = Attr(int, 7, 'Clearing', 80)
@@ -315,12 +366,138 @@ class PlayerEntry(StoredDataStructure):
     _attr['printName'] = Attr(str, 128, 'Print Name', '')
 
 
-if (__name__ == '__main__'):
-    player = PlayerEntry()
-    player.printAttributes()
-    print(len(player))
-    print(PlayerEntry.dataStructureLength())
-    print(player.goalkeeper)
-    player.goalkeeper = PlayablePosition.A
-    print(player.goalkeeper)
+class AppearanceEntry(StoredDataStructure): #TODO: complete, use enums
+    Attr.resetOffset()
+    _attr = {}
+    _attr['player'] = Attr(int, 32, 'Player')
+    _attr['editedFaceSettings'] = Attr(bool, 1, 'Edited Face Settings', False)
+    _attr['editedHairstyleSettings'] = Attr(bool, 1,
+    'Edited Hairstyle Settings', False)
+    _attr['editedPhysiqueSettings'] = Attr(bool, 1,
+    'Edited Physique Settings', False)
+    _attr['editedStripStyleSettings'] = Attr(bool, 1,
+    'Edited Strip Style Settings', False)
+    _attr['boots'] = Attr(int, 14, 'Boots ID', 23)
+    _attr['goalkeeperGloves'] = Attr(int, 10, 'GK gloves ID', 10)
+    _attr['unknownB'] = Attr(int, 4, 'Unknown B', 0) #TODO: verify default
+    _attr['baseCopyPlayer'] = Attr(int, 32, 'Base Copy Player ID')
+    _attr['neckLength'] = Attr(int, 4, 'Neck Length', 7)
+    _attr['neckLength'].valueOffset = -7
+    _attr['neckSize'] = Attr(int, 4, 'Neck Size', 7)
+    _attr['neckSize'].valueOffset = -7
+    _attr['shoulderHeight'] = Attr(int, 4, 'Shoulder Height', 7)
+    _attr['shoulderHeight'].valueOffset = -7
+    _attr['shoulderWidth'] = Attr(int, 4, 'Shoulder Width', 7)
+    _attr['shoulderWidth'].valueOffset = -7
+    _attr['chestMeasurement'] = Attr(int, 4, 'Chest Measurement', 7)
+    _attr['chestMeasurement'].valueOffset = -7
+    _attr['waistSize'] = Attr(int, 4, 'Waist Size', 7)
+    _attr['waistSize'].valueOffset = -7
+    _attr['armSize'] = Attr(int, 4, 'Arm Size', 7)
+    _attr['armSize'].valueOffset = -7
+    _attr['armLength'] = Attr(int, 4, 'Arm Length', 7)
+    _attr['armLength'].valueOffset = -7
+    _attr['thighSize'] = Attr(int, 4, 'Thigh Size', 7)
+    _attr['thighSize'].valueOffset = -7
+    _attr['calfSize'] = Attr(int, 4, 'Calf Size', 7)
+    _attr['calfSize'].valueOffset = -7
+    _attr['legLength'] = Attr(int, 4, 'Leg Length', 7)
+    _attr['legLength'].valueOffset = -7
+    _attr['headLength'] = Attr(int, 4, 'Head Length', 7)
+    _attr['headLength'].valueOffset = -7
+    _attr['headWidth'] = Attr(int, 4, 'Head Width', 7)
+    _attr['headWidth'].valueOffset = -7
+    _attr['headDepth'] = Attr(int, 4, 'Head Depth', 7)
+    _attr['headDepth'].valueOffset = -7
+    _attr['wristTapeColorLeft'] = Attr(WristTapeColor, 3,
+    'Wrist Tape Color (Left)', WristTapeColor.WHITE)
+    _attr['wristTapeColorRight'] = Attr(WristTapeColor, 3,
+    'Wrist Tape Coor (Right)', WristTapeColor.WHITE)
+    _attr['wristTaping'] = Attr(WristTaping, 2, 'Wrist Taping',
+    WristTaping.OFF)
+    _attr['sleeves'] = Attr(Sleeves, 2, 'Sleeves', Sleeves.SHORT) #TODO: def.?
+    _attr['longSleevedInners'] = Attr(LongSleevedInners, 2,
+    'Long-Sleeved Innsers', LongSleevedInners.OFF)
+    _attr['sockLength'] = Attr(SockLength, 2, 'Sock Length',
+    SockLength.STANDARD)
+    _attr['undershorts'] = Attr(Undershorts, 2, 'Undershorts',
+    Undershorts.OFF_OFF)
+    _attr['shirttail'] = Attr(Shirttail, 1, 'Shirttail', Shirttail.UNTUCKED)
+    _attr['ankleTaping'] = Attr(bool, 1, 'Ankle Taping', False)
+    _attr['playerGloves'] = Attr(bool, 1, 'Player Gloves', False)
+    _attr['playerGlovesColor'] = Attr(PlayerGlovesColor, 3, 'Player Gloves Color',
+    PlayerGlovesColor.WHITE)
+    _attr['unknownD'] = Attr(int, 4, 'Unknown D', 0) #TODO: verify default
+    _attr['unknownE'] = Attr(int, 22*8, 'Unknown E', 0) #TODO: verify default
+    _attr['skinColor'] = Attr(SkinColor, 4, 'Skin Color', SkinColor.LIGHT)
+    _attr['unknownF'] = Attr(int, 5, 'Unknown F', 0) #TODO: verify default
+    _attr['unknownG'] = Attr(int, 18*8, 'Unknown G', 0) #TODO: verify default
+    _attr['irisColor'] = Attr(IrisColor, 4, 'Iris Color', IrisColor.DARK_BROWN)
+    _attr['unknownH'] = Attr(int, 4, 'Unknown H', 0) #TODO: verify default
+    _attr['unknownI'] = Attr(int, 7*8, 'Unknown I', 0) #TODO: verify default
 
+
+def _testToBytearray(testedClass, inputFileName, outputFileName=None):
+    import copy
+    print(testedClass.__name__ + ': comparing input with toBytearray output')
+    print('Reading from input ' + inputFileName)
+    passed = True
+    file = open(inputFileName, 'rb')
+    input = bytearray(file.read())
+    file.close()
+    instance = testedClass(input, True) #TODO: fix unpack
+    output = instance.toBytearray(copy.copy(input))
+    if (outputFileName != None):
+        print('Writing output to ' + outputFileName)
+        with open(outputFileName, 'wb') as out:
+            out.write(output)
+    if (len(input) != len(output)):
+        print('Input length:', len(input))
+        print('Output length:', len(output))
+        print('Output length does not match input length!')
+        return False
+    mismatches = 0
+    for i in range(len(input)):
+        if (input[i] != output[i]):
+            passed = False
+            mismatches += 1
+            if (mismatches <= 20):
+                print('Byte ', i, ' does NOT match!')
+    if (mismatches > 20):
+        print('(and ' + str(mismatches - 20) + ' more)')
+    if (passed):
+        print('Success!\n')
+    else:
+        print('Fail!\n')
+    return passed
+
+    
+if __name__ == '__main__':
+    #player = PlayerEntry()
+    #player.printAttributes()
+    #print(len(player))
+    #print(PlayerEntry.dataStructureLength())
+    #print(player.goalkeeper)
+    #player.goalkeeper = PlayablePosition.A
+    #print(player.goalkeeper)
+    
+    import os
+    dir = os.path.dirname(os.path.realpath(__file__)) + '/test/'
+    allPass = True
+    allPass &= _testToBytearray(PlayerEntry, dir + 'player_entry_test')
+    allPass &= _testToBytearray(AppearanceEntry, dir + 'appearance_entry_test')
+    #allPass &= _testToBytearray(EditData, dir + 'edit.dat', dir + 'data.dat')
+    print('\nTest results:')
+    if (allPass):
+        print('ALL OK!')
+    else:
+        print('FAIL!')
+    #file = open(dir + 'player_entry_test', 'rb')
+    #input = bytearray(file.read())
+    #file.close()
+    #player = PlayerEntry(input)
+    #player.setDefaultValues()
+    #player.fromBytearray(input, True)
+    #player.printAttributes()
+    
+    

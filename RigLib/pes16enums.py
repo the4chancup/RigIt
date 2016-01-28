@@ -142,18 +142,21 @@ class StrongerFoot(GameDataEnum):
     LEFT_FOOT = (1, 1, 'Left foot')
 
 
-class SkinColor(GameDataEnum):
-    LIGHT = (0, 1, 'Light', 0xFFD1B3)
-    FAIR = (1, 2, 'Fair', 0xDFB391)
-    MEDIUM = (2, 3, 'Medium', 0xC19572)
-    OLIVE = (3, 4, 'Olive', 0xA37658)
-    BROWN = (4, 5, 'Brown', 0x845C40)
-    BLACK = (5, 6, 'Black', 0x64442C)
-    TRANSPARENT = (6, 0, 'Transparent', 0xCC00FF)
-    CUSTOM = (7, 7, 'Custom', 0xFFFFFF)
+class WristTapeColor(GameDataEnum): #TODO: has an unused bit
+    WHITE = (0, 1, 'White') #TODO: color
+    BLACK = (1, 2, 'Black') #TODO: color
+    BEIGE = (2, 3, 'Beige') #TODO: color
+    STRIP_COLOR = (3, 0, 'Strip Color') #TODO: color
+
+
+class WristTaping(GameDataEnum):
+    OFF = (0, 0, 'Off')
+    RIGHT = (1, 1, 'Right')
+    LEFT = (2, 2, 'Left')
+    BOTH = (3, 3, 'Both')
     
 
-class PlayerGlovesColor(GameDataEnum):
+class SpectaclesFrameColor(GameDataEnum): # Apparently identical to GlovesColor
     WHITE = (0, 0, 'White', 0xFFFFFF)
     BLACK = (1, 1, 'Black', 0x262626)
     RED = (2, 2, 'Red', 0xA92024)
@@ -175,7 +178,39 @@ class Spectacles(GameDataEnum):
     ROUND_FULL_FRAME = (7, 7, 'Round (full frame)')
 
 
-class SpectaclesFrameColor(GameDataEnum): # Apparently identical to GlovesColor
+class Sleeves(GameDataEnum):
+    SHORT = (0, 1, 'Short')
+    LONG = (1, 2, 'Long')
+    SEASONAL = (2, 0, 'Seasonal')
+
+
+class LongSleevedInners(GameDataEnum):
+    OFF = (0, 0, 'Off')
+    NORMAL = (1, 1, 'Normal')
+    TURTLE_NECK = (2, 2, 'Turtle neck')
+    #UNKNOWN = (3, 3, 'Unknown') #TODO: not sure if supported
+
+
+class SockLength(GameDataEnum):
+    STANDARD = (0, 0, 'Standard')
+    LONG = (1, 1, 'Long')
+    SHORT = (2, 2, 'Short')
+    #UNKNOWN = (3, 3, 'Unknown') #TODO: not sure if supported
+
+
+class Undershorts(GameDataEnum):
+    OFF_OFF = (0, 0, 'Summer: Off / Winter: Off')
+    OFF_LONG = (1, 2, 'Summer: Off / Winter: Long')
+    SHORT_SHORT = (2, 1, 'Summer: Short / Winter: Short')
+    SHORT_LONG = (3, 3, 'Summer: Short / Winter: Long')
+
+
+class Shirttail(GameDataEnum):
+    UNTUCKED = (0, 1, 'Untucked')
+    TUCKED_IN = (1, 0, 'Tucked in')
+
+
+class PlayerGlovesColor(GameDataEnum):
     WHITE = (0, 0, 'White', 0xFFFFFF)
     BLACK = (1, 1, 'Black', 0x262626)
     RED = (2, 2, 'Red', 0xA92024)
@@ -184,6 +219,17 @@ class SpectaclesFrameColor(GameDataEnum): # Apparently identical to GlovesColor
     GREEN = (5, 5, 'Green', 0x285E30)
     PINK = (6, 6, 'Pink', 0xd3448B)
     TURQUOISE = (7, 7, 'Turquoise', 0x5CBBD1)
+
+
+class SkinColor(GameDataEnum):
+    LIGHT = (0, 1, 'Light', 0xFFD1B3)
+    FAIR = (1, 2, 'Fair', 0xDFB391)
+    MEDIUM = (2, 3, 'Medium', 0xC19572)
+    OLIVE = (3, 4, 'Olive', 0xA37658)
+    BROWN = (4, 5, 'Brown', 0x845C40)
+    BLACK = (5, 6, 'Black', 0x64442C)
+    TRANSPARENT = (6, 0, 'Transparent', 0xCC00FF)
+    CUSTOM = (7, 7, 'Custom', 0xFFFFFF)
 
 
 class IrisColor(GameDataEnum):
