@@ -143,10 +143,10 @@ class StrongerFoot(GameDataEnum):
 
 
 class WristTapeColor(GameDataEnum): #TODO: has an unused bit
-    WHITE = (0, 1, 'White') #TODO: color
-    BLACK = (1, 2, 'Black') #TODO: color
+    WHITE = (0, 1, 'White', 0xFFFFFF) #TODO: verify
+    BLACK = (1, 2, 'Black', 0x262626) #TODO: verify
     BEIGE = (2, 3, 'Beige') #TODO: color
-    STRIP_COLOR = (3, 0, 'Strip Color') #TODO: color
+    STRIP_COLOR = (3, 0, 'Strip Color') #TODO: perhaps 0xCC00FF
 
 
 class WristTaping(GameDataEnum):

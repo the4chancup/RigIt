@@ -145,7 +145,10 @@ class StoredDataStructure:
         if (not self._unpacked):
             self.unpackData()
         if (attr.dataType == int):
-            return getattr(self, '_' + name) + attr.valueOffset
+            try:
+                return getattr(self, '_' + name) + attr.valueOffset
+            except TypeError:
+                return getattr(self, '_' + name) #TODO: raise an exception?
         elif (attr.dataType == bool):
             if (attr.valueOffset):
                 return not getattr(self, '_' + name)
@@ -182,7 +185,6 @@ class StoredDataStructure:
             setattr(self, '_' + name, newValue)
     
     def unpackData(self):
-        print('unpacking!')
         if (self._unpacked):
             return
         for name in self._attr:
@@ -194,7 +196,10 @@ class StoredDataStructure:
     def printAttributes(self, sort=True):
         if (sort):
             for name in sorted(self._attr.keys()):
-                print(name, ' = ', getattr(self, name))
+                val = getattr(self, name)
+                if (val == None):
+                    val = 'None'
+                print(name, ' = ', val)
         else:
             for attr in self._attr:
                 print(self._attr[attr].text, ' = ', getattr(self, '_' + attr))
@@ -209,13 +214,14 @@ class StoredDataStructure:
             self.unpackData()
     
     def toBytearray(self, ba=None):
+        if (not self._unpacked):
+            self.unpackData() #TODO: this might not be wanted
         if (ba == None):
             ba = bytearray([0] * self.dataStructureLength())
         elif (len(ba) != self.dataStructureLength()):
             raise ValueError('Expected bytearray of length ' +
             str(self.dataStructureLength()) + ', got ' + str(len(data)))
         for name in self._attr:
-            #print('Writing...', name)
             self._attr[name].writeToBytearray(ba, getattr(self, '_' + name))
         return ba
     
@@ -445,7 +451,7 @@ def _testToBytearray(testedClass, inputFileName, outputFileName=None):
     file = open(inputFileName, 'rb')
     input = bytearray(file.read())
     file.close()
-    instance = testedClass(input, True) #TODO: fix unpack
+    instance = testedClass(input)
     output = instance.toBytearray(copy.copy(input))
     if (outputFileName != None):
         print('Writing output to ' + outputFileName)
@@ -473,13 +479,13 @@ def _testToBytearray(testedClass, inputFileName, outputFileName=None):
 
     
 if __name__ == '__main__':
-    #player = PlayerEntry()
-    #player.printAttributes()
-    #print(len(player))
-    #print(PlayerEntry.dataStructureLength())
-    #print(player.goalkeeper)
+    player = PlayerEntry()
+    player.printAttributes()
+    print(len(player))
+    print(PlayerEntry.dataStructureLength())
+    print(player.goalkeeper)
     #player.goalkeeper = PlayablePosition.A
-    #print(player.goalkeeper)
+    print(player.goalkeeper)
     
     import os
     dir = os.path.dirname(os.path.realpath(__file__)) + '/test/'
