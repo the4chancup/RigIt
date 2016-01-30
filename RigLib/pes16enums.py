@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class GameDataEnum(Enum): #TODO: move to its own file
-    def __init__(self, menuId, gameId=None, description=None, data=None):
+    def __init__(self, menuId, gameId=None, description=None, data=None, hidden=False):
         self.menuId = menuId
         if (gameId != None):
             self.gameId = gameId
@@ -13,6 +13,7 @@ class GameDataEnum(Enum): #TODO: move to its own file
         else:
             self.description = self.name
         self.data = data #TODO: consider allowing multiple data arguments
+        self.hidden = hidden #TODO: consider better handling
     
     def __str__(self):
         return self.description
@@ -109,10 +110,10 @@ class RegisteredPosition(GameDataEnum):
 
 
 class PlayablePosition(GameDataEnum):
-    C = (0,)
-    B = (1,)
-    A = (2,)
-    #S = (3,) #TODO: not sure if supported
+    C = (0, 0, 'C')
+    B = (1, 1, 'B')
+    A = (2, 2, 'A')
+    S = (3, 3, 'S', None, True) #TODO: not sure if supported
 
 
 class PlayingStyle(GameDataEnum):
@@ -134,7 +135,7 @@ class PlayingStyle(GameDataEnum):
     DEFENSIVE_FULLBACK = (15, 12, 'Defensive Fullback')
     OFFENSIVE_GOALKEEPER = (16, 17, 'Offensive Goalkeeper')
     DEFENSIVE_GOALKEEPER = (17, 18, 'Defensive Goalkeeper')
-    #UNKNOWN = (19, 16, 'Unknown') #TODO: not sure if supported
+    UNKNOWN = (19, 16, 'Unknown', None, True) #TODO: not sure if supported
 
 
 class StrongerFoot(GameDataEnum):
@@ -182,20 +183,20 @@ class Sleeves(GameDataEnum):
     SHORT = (0, 1, 'Short')
     LONG = (1, 2, 'Long')
     SEASONAL = (2, 0, 'Seasonal')
-
+    UNKNOWN = (3, 3, 'Unknown', None, True) #TODO: not sure if supported
 
 class LongSleevedInners(GameDataEnum):
     OFF = (0, 0, 'Off')
     NORMAL = (1, 1, 'Normal')
     TURTLE_NECK = (2, 2, 'Turtle neck')
-    #UNKNOWN = (3, 3, 'Unknown') #TODO: not sure if supported
+    UNKNOWN = (3, 3, 'Unknown', None, True) #TODO: not sure if supported
 
 
 class SockLength(GameDataEnum):
     STANDARD = (0, 0, 'Standard')
     LONG = (1, 1, 'Long')
     SHORT = (2, 2, 'Short')
-    #UNKNOWN = (3, 3, 'Unknown') #TODO: not sure if supported
+    UNKNOWN = (3, 3, 'Unknown', None, True) #TODO: not sure if supported
 
 
 class Undershorts(GameDataEnum):

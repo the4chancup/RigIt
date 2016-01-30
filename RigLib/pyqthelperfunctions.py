@@ -11,17 +11,19 @@ def _createQIconFromColor(color, width=24, height=12):
     pixmap.fill(QColor(color))
     return QIcon(pixmap)
 
-def fillQComboBox(comboBox, data):
+def fillQComboBox(comboBox, data, addHidden=False):
     if hasattr(data, '__bases__'):
         if GameDataEnum in data.__bases__:
             for _, member in data.__members__.items():
+                if (addHidden == False and member.hidden == True):
+                    continue
                 if (member.data != None):
                     icon = _createQIconFromColor(member.data)
                     comboBox.addItem(icon, member.description)
                 else:
                     comboBox.addItem(member.description)
             return
-    raise TypeError('%s or its parents is not supported' % type(data))
+    raise TypeError('%s or its parents are not supported' % type(data))
 
 def getOpenFileName(parent=None, dir=None, filter=None, caption=None):
     if (dir == None):
