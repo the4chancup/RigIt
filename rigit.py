@@ -34,7 +34,7 @@ if __name__ == '__main__':
     websiteLabel = QLabel('<a href=\'' + wiki + '\'>' + wiki + '</a>')
     websiteLabel.setOpenExternalLinks(True)
     mainWindow.statusbar.insertPermanentWidget(0, websiteLabel)
-    decrypterText = '<a href="https://github.com/tunabrain4cc/pes16decrypter">'
+    decrypterText = '<a href="https://github.com/the4chancup/pes16decrypter">'
     decrypterText += 'pes16decrypter</a> status: '
     if (EditFile.crypterAvailable()):
         decrypterText += 'found'
