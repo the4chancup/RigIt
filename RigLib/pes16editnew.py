@@ -133,17 +133,20 @@ class StoredDataStructure:
         self._data = data
         self._unpacked = False
         if (data != None):
+            print('from bytearray')
             self.fromBytearray(self._data, unpackData)
         else:
+            print('set default values')
             self.setDefaultValues()
     
     def __getattribute__(self, name):
-        if (name == '_attr' or name == '_length' or name == '_data' or
-        name == '_unpacked' or not name in self._attr): #TODO: fishy solution
+        try: # should be a little bit faster than an if
             return super().__getattribute__(name)
-        attr = self._attr[name]
-        if (not self._unpacked):
-            self.unpackData()
+        except AttributeError:
+            if (not self._unpacked):
+                self.unpackData()
+                return self.__getattribute__(name)
+        attr = self._attr[name] #TODO: try/except?
         if (attr.dataType == int):
             try:
                 return getattr(self, '_' + name) + attr.valueOffset
@@ -168,8 +171,8 @@ class StoredDataStructure:
             if (not self._unpacked):
                 self.unpackData()
             if (attr.dataType == int):
-                newValue = value - attr.valueOffset
-                newValue = max(attr.minValue, min(newValue, attr.maxValue))
+                newValue = int(max(attr.minValue, min(value - attr.valueOffset,
+                attr.maxValue)))
             elif (attr.dataType == bool):
                 if (attr.valueOffset):
                     newValue = not value
@@ -185,14 +188,13 @@ class StoredDataStructure:
             setattr(self, '_' + name, newValue)
     
     def unpackData(self):
-        if (self._unpacked):
-            return
-        for name in self._attr:
-            setattr(self, '_' + name,
-            self._attr[name].readFromBytearray(self._data))
-        self._data = None
-        self._unpacked = True
-          
+        if (not self._unpacked):
+            for name in self._attr:
+                setattr(self, '_' + name,
+                self._attr[name].readFromBytearray(self._data))
+            self._unpacked = True # set early to stop infinite recursion
+            self._data = None    
+    
     def printAttributes(self, sort=True):
         if (sort):
             for name in sorted(self._attr.keys()):
@@ -214,8 +216,6 @@ class StoredDataStructure:
             self.unpackData()
     
     def toBytearray(self, ba=None):
-        if (not self._unpacked):
-            self.unpackData() #TODO: this might not be wanted
         if (ba == None):
             ba = bytearray([0] * self.dataStructureLength())
         elif (len(ba) != self.dataStructureLength()):
@@ -231,9 +231,6 @@ class StoredDataStructure:
             setattr(self, '_' + name, self._attr[name].defaultValue)
         self._data = None
         self._unpacked = True
-    
-    def getAttributeText(self, name): #TODO: needed?
-        return self._attr[name].text
         
 
 class PlayerEntry(StoredDataStructure):
@@ -479,14 +476,6 @@ def _testToBytearray(testedClass, inputFileName, outputFileName=None):
 
     
 if __name__ == '__main__':
-    player = PlayerEntry()
-    player.printAttributes()
-    print(len(player))
-    print(PlayerEntry.dataStructureLength())
-    print(player.goalkeeper)
-    #player.goalkeeper = PlayablePosition.A
-    print(player.goalkeeper)
-    
     import os
     dir = os.path.dirname(os.path.realpath(__file__)) + '/test/'
     allPass = True
@@ -498,12 +487,15 @@ if __name__ == '__main__':
         print('ALL OK!')
     else:
         print('FAIL!')
-    #file = open(dir + 'player_entry_test', 'rb')
-    #input = bytearray(file.read())
-    #file.close()
-    #player = PlayerEntry(input)
-    #player.setDefaultValues()
-    #player.fromBytearray(input, True)
-    #player.printAttributes()
-    
-    
+        
+    file = open(dir + 'player_entry_test', 'rb')
+    input = bytearray(file.read())
+    file.close()
+    player = PlayerEntry(input)
+    player2 = PlayerEntry(player.toBytearray())
+    print('Setting age')
+    player2.age = 66
+    player2.derp = 7
+    print(player2.derp)
+    player.setDefaultValues()
+    player2.printAttributes()
