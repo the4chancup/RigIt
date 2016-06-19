@@ -196,6 +196,7 @@ class PlayersWidget(QWidget, Ui_PlayersWidget):
         proxy.cleverConnect(self.cbxSpectacles, 'spectaclesMenuId')
         proxy.cleverConnect(self.cbxSkinColor, 'skinColorMenuId')
         proxy.cleverConnect(self.cbxIrisColor, 'irisColorMenuId')
+        proxy.cleverConnect(self.spxSockLength, 'sockLength')
         
     def _setPlayerEntryFieldsEnabled(self, enable):
         self.boxPlayers.setEnabled(enable)
